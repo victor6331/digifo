@@ -15,6 +15,13 @@
       "when": 1752597220611,
       "tag": "0001_dashing_dormammu",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1753794870147,
+      "tag": "0002_tan_korvac",
+      "breakpoints": true
     }
   ]
 }
