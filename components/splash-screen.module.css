@@ -1,0 +1,110 @@
+/*
+ * Styles du splash screen. Le fond est vert (#00b169) et couvre tout
+ * l’écran. Le conteneur central contient le logo et le texte.
+ */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00b169;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  overflow: hidden;
+}
+
+/* Conteneur principal : il commence centré et glisse ensuite vers la gauche */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  animation: slide-left 0.4s ease forwards;
+  animation-delay: 1.2s;
+}
+
+/* Le logo est centré et subit une animation pop */
+.logoWrapper {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Animation de pop du logo (définie plus bas) */
+  animation: pop-logo 0.5s ease-out forwards;
+}
+
+/* Le logo remplit son conteneur */
+.logo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Conteneur du texte : invisible au départ, puis apparaît avec translation */
+.nameWrapper {
+  display: flex;
+  /* L’opacité est animée ; la marge latérale est gérée par Tailwind */
+  opacity: 0;
+  animation: show-text 0.3s ease forwards;
+  animation-delay: 1.4s;
+}
+
+/* Chaque lettre est animée séparément pour l’effet de cascade */
+.letter {
+  /* Les lettres partent un peu en dessous et s’animent vers le haut */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fade-in-letter 0.4s ease forwards;
+}
+
+/* Animation de pop pour le logo */
+@keyframes pop-logo {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animation du glissement vers la gauche du conteneur */
+@keyframes slide-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-80px);
+  }
+}
+
+/* Apparition du conteneur texte avec translation en X */
+@keyframes show-text {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation d’apparition de chaque lettre en translation verticale */
+@keyframes fade-in-letter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

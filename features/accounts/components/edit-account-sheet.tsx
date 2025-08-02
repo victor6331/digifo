@@ -58,7 +58,7 @@ export const EditAccountSheet = () => {
     }
   };
 
-  const defaultVaues = accountQuery.data
+  const defaultValues = accountQuery.data
     ? {
         name: accountQuery.data.name,
       }
@@ -85,7 +85,7 @@ export const EditAccountSheet = () => {
                 id={id}
                 onSubmit={onSubmit}
                 disabled={isPending}
-                defaultValues={defaultVaues}
+                defaultValues={defaultValues}
                 onDelete={onDelete}
               />
             </div>
