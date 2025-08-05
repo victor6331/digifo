@@ -12,6 +12,7 @@ import {
   accounts,
   categories,
   insertTransactionSchema,
+  transactionRequestSchema,
   transactions,
 } from "@/db/schema";
 
@@ -116,12 +117,7 @@ const app = new Hono()
   .post(
     "/",
     clerkMiddleware(),
-    zValidator(
-      "json",
-      insertTransactionSchema.omit({
-        id: true,
-      })
-    ),
+    zValidator("json", transactionRequestSchema),
     async (c) => {
       const auth = getAuth(c);
       const values = c.req.valid("json");
@@ -144,14 +140,7 @@ const app = new Hono()
   .post(
     "/bulk-create",
     clerkMiddleware(),
-    zValidator(
-      "json",
-      z.array(
-        insertTransactionSchema.omit({
-          id: true,
-        })
-      )
-    ),
+    zValidator("json", z.array(transactionRequestSchema)),
     async (c) => {
       const auth = getAuth(c);
       const values = c.req.valid("json");

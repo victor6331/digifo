@@ -1,8 +1,7 @@
-import { z } from "zod";
-
 import { relations } from "drizzle-orm";
 import { integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const accounts = pgTable("accounts", {
   id: text("id").primaryKey(),
@@ -46,6 +45,15 @@ export const transactions = pgTable("transactions", {
   }),
 });
 
+export const transactionRequestSchema = z.object({
+  date: z.coerce.date(), // Accepte une chaîne et la convertit en Date
+  accountId: z.string(),
+  categoryId: z.string().nullable().optional(),
+  payee: z.string(),
+  amount: z.number(), // On reçoit déjà un nombre via TransactionForm
+  notes: z.string().nullable().optional(),
+});
+
 export const transationsRelations = relations(transactions, ({ one }) => ({
   account: one(accounts, {
     fields: [transactions.accountId],
@@ -57,7 +65,4 @@ export const transationsRelations = relations(transactions, ({ one }) => ({
   }),
 }));
 
-export const insertTransactionSchema = createInsertSchema(transactions, {
-  date: (schema) => z.coerce.date() as any,
-  amount: (schema) => z.coerce.number().int() as any,
-});
+export const insertTransactionSchema = createInsertSchema(transactions);
