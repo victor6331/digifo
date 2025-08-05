@@ -165,7 +165,7 @@ const app = new Hono()
         .values(
           values.map((value) => ({
             id: createId(),
-            ...values,
+            ...value,
           }))
         )
         .returning();
@@ -269,7 +269,7 @@ const app = new Hono()
         .returning();
 
       if (!data) {
-        return c.json({ error: "Not Fount" }, 404);
+        return c.json({ error: "Not Found" }, 404);
       }
 
       return c.json({ data });
@@ -319,7 +319,7 @@ const app = new Hono()
         });
 
       if (!data) {
-        return c.json({ error: "Not Fount" }, 404);
+        return c.json({ error: "Not Found" }, 404);
       }
 
       return c.json({ data });
