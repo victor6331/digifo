@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 
 import { useDeleteCategory } from "@/features/categories/api/use-delete-category";
-import { useOpenCategory } from "@/features/categories/hooks/use-open-categories";
+import { useOpenCategory } from "@/features/categories/hooks/use-open-category";
 
 import { useConfirm } from "@/hooks/use-confirm";
 

@@ -17,11 +17,11 @@ import { Plus } from "lucide-react";
 
 const AccountsPage = () => {
   const newAccount = useNewAccount();
-  const deleteAccount = useBulkDeleteAccounts();
+  const deleteAccounts = useBulkDeleteAccounts();
   const accountsQuery = useGetAccounts();
   const accounts = accountsQuery.data || [];
 
-  const isDisabled = accountsQuery.isLoading || deleteAccount.isPending;
+  const isDisabled = accountsQuery.isLoading || deleteAccounts.isPending;
 
   if (accountsQuery.isLoading) {
     return (
@@ -61,7 +61,7 @@ const AccountsPage = () => {
             data={accounts}
             onDelete={(row) => {
               const ids = row.map((r) => r.original.id);
-              deleteAccount.mutate({ ids });
+              deleteAccounts.mutate({ ids });
             }}
             disabled={isDisabled}
           />
