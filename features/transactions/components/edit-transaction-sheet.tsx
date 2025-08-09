@@ -20,6 +20,7 @@ import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 
 import { insertTransactionSchema } from "@/db/schema";
 import { useConfirm } from "@/hooks/use-confirm";
+import { convertAmountFromMiliunits } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { z } from "zod";
 
@@ -101,7 +102,9 @@ export const EditTransactionSheet = () => {
     ? {
         accountId: transactionQuery.data.accountId,
         categoryId: transactionQuery.data.categoryId,
-        amount: transactionQuery.data.amount.toString(),
+        amount: convertAmountFromMiliunits(
+          transactionQuery.data.amount
+        ).toString(),
         date: transactionQuery.data.date
           ? new Date(transactionQuery.data.date)
           : new Date(),

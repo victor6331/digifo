@@ -11,7 +11,6 @@ import { z } from "zod";
 import {
   accounts,
   categories,
-  insertTransactionSchema,
   transactionRequestSchema,
   transactions,
 } from "@/db/schema";
@@ -218,12 +217,7 @@ const app = new Hono()
         id: z.string().optional(),
       })
     ),
-    zValidator(
-      "json",
-      insertTransactionSchema.omit({
-        id: true,
-      })
-    ),
+    zValidator("json", transactionRequestSchema),
     async (c) => {
       const auth = getAuth(c);
       const { id } = c.req.valid("param");
