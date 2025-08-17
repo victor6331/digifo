@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "recharts";
 
-const COLORS = ["#22c55e", "#12c6ff", "#ff647f", "#ff9354"];
+const COLORS = ["#1A9E4B", "#12c6ff", "#ff647f", "#ff9354"];
 
 type Props = {
   data?: {
@@ -67,7 +67,7 @@ export const PieVariant = ({ data }: Props) => {
           outerRadius={90}
           innerRadius={60}
           paddingAngle={2}
-          fill="#22c55e"
+          fill="#1A9E4B"
           dataKey="value"
           labelLine={false}
         >

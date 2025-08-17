@@ -32,7 +32,7 @@ export const SpendingPie = ({ data = [] }: Props) => {
 
   return (
     <Card className="border-none drop-shadow-sm">
-      <CardHeader className="felx space-y-2 lg:space-y-0 lg:flex-row lg:items-center justify-between">
+      <CardHeader className="flex space-y-2 lg:space-y-0 lg:flex-row lg:items-center justify-between">
         <CardTitle className="text-xl line-clamp-1">Categories</CardTitle>
         <Select defaultValue={chartType} onValueChange={onTypeChange}>
           <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
