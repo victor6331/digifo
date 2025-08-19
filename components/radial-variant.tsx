@@ -50,7 +50,7 @@ export const RadialVariant = ({ data }: Props) => {
                 {payload.map((entry: any, index: number) => (
                   <li
                     key={`item-${index}`}
-                    className="flex items-center sapce-x-2"
+                    className="flex items-center space-x-2"
                   >
                     <span
                       className="size-2 rounded-full"
