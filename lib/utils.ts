@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import { fr } from "date-fns/locale";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -15,7 +16,7 @@ export function convertAmountToMiliunits(amount: number) {
 }
 
 export function formatCurrency(value: number) {
-  return Intl.NumberFormat("en-US", {
+  return Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: 2,
@@ -75,20 +76,22 @@ export function formatDateRange(period?: Period) {
   const defaultFrom = subDays(defaultTo, 30);
 
   if (!period?.from) {
-    return `${format(defaultFrom, "LLL dd")} - ${format(
+    return `${format(defaultFrom, "LLL dd", { locale: fr })} - ${format(
       defaultTo,
-      "LLL dd, y"
+      "LLL dd, y",
+      { locale: fr }
     )}`;
   }
 
   if (period.to) {
-    return `${format(period.from, "LLL dd")} - ${format(
-      period.to,
-      "LLL dd, y"
+    return `${format(period.from as Date, "LLL dd", { locale: fr })} - ${format(
+      period.to as Date,
+      "LLL dd, y",
+      { locale: fr }
     )}`;
   }
 
-  return format(period.from, "LLL dd, y");
+  return format(period.from as Date, "LLL dd, y", { locale: fr });
 }
 
 export function formatPercentage(
@@ -97,7 +100,7 @@ export function formatPercentage(
     addPrefix: false,
   }
 ) {
-  const result = new Intl.NumberFormat("en-US", {
+  const result = new Intl.NumberFormat("fr-FR", {
     style: "percent",
   }).format(value / 100);
 

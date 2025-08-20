@@ -62,7 +62,7 @@ const TransactionsPage = () => {
     const accountId = await confirm();
 
     if (!accountId) {
-      return toast.error("Please select an account to continue.");
+      return toast.error("Veuillez sélectionner un compte pour continuer.");
     }
 
     const data = values.map((value) => ({
@@ -112,7 +112,7 @@ const TransactionsPage = () => {
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:justify-between">
           <CardTitle className="text-xl line-clamp-1">
-            Transaction History
+            Historique des transactions
           </CardTitle>
           <div className="w-full flex flex-col lg:flex-row gap-y-2 gap-x-2 items-stretch lg:items-center lg:w-auto lg:ml-auto lg:justify-end">
             <Button
@@ -120,15 +120,16 @@ const TransactionsPage = () => {
               size="sm"
               className="w-full lg:w-auto"
             >
-              <Plus className="size-4 mr-2" />
-              Add new
-            </Button>
+            <Plus className="size-4 mr-2" />
+            Ajouter
+          </Button>
             <UploadButton onUpload={onUpload} />
           </div>
         </CardHeader>
         <CardContent>
           <DataTable
             filterKey="payee"
+            filterLabel="bénéficiaire"
             columns={columns}
             data={transactions}
             onDelete={(row) => {

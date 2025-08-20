@@ -105,10 +105,10 @@ export const TransactionForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Account</FormLabel>
+              <FormLabel>Compte</FormLabel>
               <FormControl>
                 <Select
-                  placeholder="Select an account"
+                  placeholder="Sélectionner un compte"
                   options={accountOptions}
                   onCreate={onCreateAccount}
                   value={field.value}
@@ -124,10 +124,10 @@ export const TransactionForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category</FormLabel>
+              <FormLabel>Catégorie</FormLabel>
               <FormControl>
                 <Select
-                  placeholder="Select a category"
+                  placeholder="Sélectionner une catégorie"
                   options={categoryOptions}
                   onCreate={onCreateCategory}
                   value={field.value}
@@ -143,13 +143,13 @@ export const TransactionForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Payee</FormLabel>
+              <FormLabel>Bénéficiaire</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   value={field.value ?? ""}
                   disabled={disabled}
-                  placeholder="Add a payee"
+                  placeholder="Ajouter un bénéficiaire"
                 />
               </FormControl>
             </FormItem>
@@ -160,12 +160,12 @@ export const TransactionForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Amount</FormLabel>
+              <FormLabel>Montant</FormLabel>
               <FormControl>
                 <AmountInput
                   {...field}
                   disabled={disabled}
-                  placeholder="0.00"
+                  placeholder="0,00"
                 />
               </FormControl>
             </FormItem>
@@ -182,14 +182,14 @@ export const TransactionForm = ({
                   {...field}
                   value={field.value ?? ""}
                   disabled={disabled}
-                  placeholder="Optional notes"
+                  placeholder="Notes facultatives"
                 />
               </FormControl>
             </FormItem>
           )}
         />
         <Button className="w-full" disabled={disabled}>
-          {!!id ? "Save changes" : "Create transaction"}
+          {!!id ? "Enregistrer les modifications" : "Créer une transaction"}
         </Button>
         {id && (
           <Button
@@ -200,7 +200,7 @@ export const TransactionForm = ({
             variant="outline"
           >
             <Trash className="size-4 mr-2" />
-            Delete transaction
+            Supprimer la transaction
           </Button>
         )}
       </form>

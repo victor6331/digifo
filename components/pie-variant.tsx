@@ -20,8 +20,11 @@ type Props = {
   }[];
 };
 
-export const PieVariant = ({ data }: Props) => {
-  const total = data?.reduce((sum, item) => sum + item.value, 0) ?? 0;
+export const PieVariant = ({ data = [] }: Props) => {
+  const sortedData = [...data].sort(
+    (a, b) => Math.abs(b.value) - Math.abs(a.value)
+  );
+  const totalAbs = sortedData.reduce((sum, item) => sum + Math.abs(item.value), 0);
 
   return (
     <ResponsiveContainer width="100%" height={350}>
@@ -49,7 +52,9 @@ export const PieVariant = ({ data }: Props) => {
                       </span>
                       <span className="text-sm">
                         {formatPercentage(
-                          total ? (entry.payload.value / total) * 100 : 0
+                          totalAbs
+                            ? (Math.abs(entry.payload.value) / totalAbs) * 100
+                            : 0
                         )}
                       </span>
                     </div>
@@ -61,7 +66,7 @@ export const PieVariant = ({ data }: Props) => {
         />
         <Tooltip content={<CategoryTooltip />} />
         <Pie
-          data={data}
+          data={sortedData}
           cx="50%"
           cy="50%"
           outerRadius={90}
@@ -71,7 +76,7 @@ export const PieVariant = ({ data }: Props) => {
           dataKey="value"
           labelLine={false}
         >
-          {data?.map((_entry, index) => (
+          {sortedData.map((_entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

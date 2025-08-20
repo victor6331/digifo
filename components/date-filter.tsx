@@ -100,7 +100,7 @@ export const DateFilter = () => {
               className="flex-1"
               variant="outline"
             >
-              Reset
+              Réinitialiser
             </Button>
           </PopoverClose>
           <PopoverClose asChild>
@@ -109,7 +109,7 @@ export const DateFilter = () => {
               disabled={!date?.from || !date?.to}
               className="flex-1"
             >
-              Apply
+              Appliquer
             </Button>
           </PopoverClose>
         </div>

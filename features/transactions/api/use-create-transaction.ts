@@ -18,11 +18,11 @@ export const useCreateTransaction = () => {
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Transaction created");
+      toast.success("Transaction créée");
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
     onError: () => {
-      toast.error("Failed to create transaction");
+      toast.error("Échec de la création de la transaction");
     },
   });
 

@@ -42,6 +42,7 @@ export const Select = ({
           },
         }),
       }}
+      formatCreateLabel={(inputValue) => `Créer "${inputValue}"`}
       value={formattedValue}
       onChange={onSelect}
       options={options}

@@ -45,7 +45,7 @@ const CategoriesPage = () => {
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="flex flex-col gap-y-2 lg:flex-row lg:items-center lg:justify-between">
           <CardTitle className="text-xl line-clamp-1">
-            Categories page
+            Page des catégories
           </CardTitle>
           <Button
             onClick={newCategory.onOpen}
@@ -53,12 +53,13 @@ const CategoriesPage = () => {
             className="w-full lg:w-auto"
           >
             <Plus className="size-4 mr-2" />
-            Add new
+            Ajouter
           </Button>
         </CardHeader>
         <CardContent>
           <DataTable
             filterKey="name"
+            filterLabel="nom"
             columns={columns}
             data={categories}
             onDelete={(row) => {

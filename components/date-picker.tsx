@@ -30,7 +30,9 @@ export const DatePicker = ({ value, onChange, disabled }: Props) => {
           )}
         >
           <CalendarIcon className="size-4 mr2" />
-          {value ? format(value, "PPP") : <span>Pick a date</span>}
+          {value ? value.toLocaleDateString("fr-FR", { dateStyle: "long" }) : (
+            <span>Choisir une date</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent>

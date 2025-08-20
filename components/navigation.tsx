@@ -12,7 +12,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 const routes = [
   {
     href: "/",
-    label: "Overview",
+    label: "Aperçu",
   },
   {
     href: "/transactions",
@@ -20,15 +20,15 @@ const routes = [
   },
   {
     href: "/accounts",
-    label: "Accounts",
+    label: "Comptes",
   },
   {
     href: "/categories",
-    label: "Categories",
+    label: "Catégories",
   },
   {
     href: "/settings",
-    label: "Settings",
+    label: "Paramètres",
   },
 ];
 

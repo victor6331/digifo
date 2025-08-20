@@ -23,12 +23,12 @@ export const useEditTransaction = (id?: string) => {
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Transaction updated");
+      toast.success("Transaction mise à jour");
       queryClient.invalidateQueries({ queryKey: ["transaction", { id }] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
     onError: () => {
-      toast.error("Failed to edit transaction");
+      toast.error("Échec de la modification de la transaction");
     },
   });
 

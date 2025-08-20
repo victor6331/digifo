@@ -14,7 +14,12 @@ type Props = {
   onChange: (columnIndex: number, value: string | null) => void;
 };
 
-const options = ["amount", "payee", "date"];
+const options = ["amount", "payee", "date"] as const;
+const optionLabels: Record<(typeof options)[number], string> = {
+  amount: "Montant",
+  payee: "Bénéficiaire",
+  date: "Date",
+};
 
 export const TableHeadSelect = ({
   columnIndex,
@@ -34,10 +39,10 @@ export const TableHeadSelect = ({
           currentSelection && "text-green-500"
         )}
       >
-        <SelectValue placeholder="Skip" />
+        <SelectValue placeholder="Ignorer" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="skip">Skip</SelectItem>
+        <SelectItem value="skip">Ignorer</SelectItem>
         {options.map((option, index) => {
           const disabled =
             Object.values(selectedColumns).includes(option) &&
@@ -50,7 +55,7 @@ export const TableHeadSelect = ({
               disabled={disabled}
               className="capitalize"
             >
-              {option}
+              {optionLabels[option]}
             </SelectItem>
           );
         })}

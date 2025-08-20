@@ -59,11 +59,11 @@ export const CategoryForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Nom</FormLabel>
               <FormControl>
                 <Input
                   disabled={disabled}
-                  placeholder="e.g. Supplier, Salary, etc"
+                  placeholder="ex. Fournisseur, Salaire, etc."
                   {...field}
                 />
               </FormControl>
@@ -71,7 +71,7 @@ export const CategoryForm = ({
           )}
         />
         <Button className="w-full" disabled={disabled}>
-          {!!id ? "Save changes" : "Create category"}
+          {!!id ? "Enregistrer les modifications" : "Créer une catégorie"}
         </Button>
         {id && (
           <Button
@@ -82,7 +82,7 @@ export const CategoryForm = ({
             variant="outline"
           >
             <Trash className="size-4 mr-2" />
-            Delete category
+            Supprimer la catégorie
           </Button>
         )}
       </form>

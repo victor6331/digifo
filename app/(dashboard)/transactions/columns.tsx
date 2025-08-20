@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { InferResponseType } from "hono";
 
 import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 import { Actions } from "./actions";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -31,14 +32,14 @@ export const columns: ColumnDef<ResponseType>[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label="Tout sélectionner"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label="Sélectionner la ligne"
       />
     ),
     enableSorting: false,
@@ -59,8 +60,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
     cell: ({ row }) => {
       const date = row.getValue("date") as Date;
-
-      return <span>{format(date, "dd MMMM, yyyy")}</span>;
+      return <span>{format(date, "dd MMMM, yyyy", { locale: fr })}</span>;
     },
   },
   {
@@ -71,7 +71,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Category
+          Catégorie
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -94,7 +94,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Payee
+          Bénéficiaire
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -108,7 +108,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Amount
+          Montant
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -133,7 +133,7 @@ export const columns: ColumnDef<ResponseType>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Account
+          Compte
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

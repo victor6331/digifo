@@ -44,25 +44,25 @@ export const Chart = ({ data = [] }: Props) => {
         <CardTitle className="text-xl line-clamp-1">Transactions</CardTitle>
         <Select defaultValue={chartType} onValueChange={onTypeChange}>
           <SelectTrigger className="lg:w-auto h-9 rounded-md px-3">
-            <SelectValue placeholder="Select a chart type" />
+            <SelectValue placeholder="Sélectionner un type de graphique" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="area">
               <div className="flex items-center">
                 <AreaChart className="size-4 mr-2 shrink-0" />
-                <p className="line-clamp-1">Area Chart</p>
+                <p className="line-clamp-1">Graphique en aires</p>
               </div>
             </SelectItem>
             <SelectItem value="line">
               <div className="flex items-center">
                 <LineChart className="size-4 mr-2 shrink-0" />
-                <p className="line-clamp-1">Line Chart</p>
+                <p className="line-clamp-1">Graphique en lignes</p>
               </div>
             </SelectItem>
             <SelectItem value="bar">
               <div className="flex items-center">
                 <BarChart3 className="size-4 mr-2 shrink-0" />
-                <p className="line-clamp-1">Bar Chart</p>
+                <p className="line-clamp-1">Graphique à barres</p>
               </div>
             </SelectItem>
           </SelectContent>
@@ -72,9 +72,7 @@ export const Chart = ({ data = [] }: Props) => {
         {data.length === 0 ? (
           <div className="flex flex-col gap-y-4 items-center justify-center h-[350px] w-full">
             <FileSearch className="size-6 text-muted-foreground" />
-            <p className="text-muted-foreground text-sm">
-              No data for this period
-            </p>
+            <p className="text-muted-foreground text-sm">Aucune donnée pour cette période</p>
           </div>
         ) : (
           <>

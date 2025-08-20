@@ -19,13 +19,13 @@ export const useDeleteAccount = (id?: string) => {
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Account deleted");
+      toast.success("Compte supprimé");
       queryClient.invalidateQueries({ queryKey: ["account", { id }] });
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
     },
     onError: () => {
-      toast.error("Failed to delete account");
+      toast.error("Échec de la suppression du compte");
     },
   });
 

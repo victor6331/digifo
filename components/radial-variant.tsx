@@ -17,6 +17,10 @@ type Props = {
 };
 
 export const RadialVariant = ({ data }: Props) => {
+  const sortedData = (data ?? []).slice().sort(
+    (a, b) => Math.abs(b.value) - Math.abs(a.value)
+  );
+
   return (
     <ResponsiveContainer width="100%" height={350}>
       <RadialBarChart
@@ -25,7 +29,7 @@ export const RadialVariant = ({ data }: Props) => {
         barSize={10}
         innerRadius="90%"
         outerRadius="40%"
-        data={data?.map((item, index) => ({
+        data={sortedData.map((item, index) => ({
           ...item,
           fill: COLORS[index % COLORS.length],
         }))}
@@ -61,7 +65,7 @@ export const RadialVariant = ({ data }: Props) => {
                         {entry.value}
                       </span>
                       <span className="text-sm">
-                        {formatCurrency(entry.payload.value)}
+                        {formatCurrency(Math.abs(entry.payload.value))}
                       </span>
                     </div>
                   </li>

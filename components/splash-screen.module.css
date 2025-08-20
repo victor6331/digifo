@@ -97,7 +97,7 @@
   }
 }
 
-/* Animation d’apparition de chaque lettre en translation verticale */
+/* Apparition de chaque lettre en translation verticale */
 @keyframes fade-in-letter {
   from {
     opacity: 0;
@@ -108,3 +108,4 @@
     transform: translateY(0);
   }
 }
+
