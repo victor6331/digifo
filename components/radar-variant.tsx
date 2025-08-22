@@ -7,7 +7,6 @@ import {
   Tooltip,
 } from "recharts";
 
-import { formatCurrency } from "@/lib/utils";
 import { CategoryTooltip } from "@/components/category-tooltip";
 
 type Props = {
@@ -26,7 +25,7 @@ export const RadarVariant = ({ data = [] }: Props) => {
   return (
     <div className="flex flex-col">
       <div className="w-full h-[350px]">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={350}>
           <RadarChart cx="50%" cy="50%" outerRadius="60%" data={data}>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" style={{ fontSize: "12px" }} />
@@ -40,22 +39,6 @@ export const RadarVariant = ({ data = [] }: Props) => {
           </RadarChart>
         </ResponsiveContainer>
       </div>
-      {sortedData.length > 0 && (
-        <div className="mt-4 w-full">
-          <ul className="flex flex-col space-y-2">
-            {sortedData.map((item, index) => (
-              <li key={`item-${index}`} className="flex items-center space-x-2">
-                <span
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                />
-                <span className="text-sm text-muted-foreground">{item.name}</span>
-                <span className="text-sm">{formatCurrency(Math.abs(item.value))}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };

@@ -24,7 +24,10 @@ export const PieVariant = ({ data = [] }: Props) => {
   const sortedData = [...data].sort(
     (a, b) => Math.abs(b.value) - Math.abs(a.value)
   );
-  const totalAbs = sortedData.reduce((sum, item) => sum + Math.abs(item.value), 0);
+  const totalAbs = sortedData.reduce(
+    (sum, item) => sum + Math.abs(item.value),
+    0
+  );
 
   return (
     <ResponsiveContainer width="100%" height={350}>
@@ -34,26 +37,26 @@ export const PieVariant = ({ data = [] }: Props) => {
           verticalAlign="bottom"
           align="right"
           iconType="circle"
-          content={({ payload }: any) => {
+          content={() => {
             return (
               <ul className="flex flex-col space-y-2">
-                {payload.map((entry: any, index: number) => (
+                {sortedData.map((entry, index) => (
                   <li
                     key={`item-${index}`}
                     className="flex items-center space-x-2"
                   >
                     <span
                       className="size-2 rounded-full"
-                      style={{ backgroundColor: entry.color }}
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
                     />
                     <div className="space-x-1">
                       <span className="text-sm text-muted-foreground">
-                        {entry.value}
+                        {entry.name}
                       </span>
                       <span className="text-sm">
                         {formatPercentage(
                           totalAbs
-                            ? (Math.abs(entry.payload.value) / totalAbs) * 100
+                            ? (Math.abs(entry.value) / totalAbs) * 100
                             : 0
                         )}
                       </span>
