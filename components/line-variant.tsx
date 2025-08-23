@@ -17,6 +17,7 @@ type Props = {
     date: Date;
     income: number;
     expenses: number;
+    remaining: number;
   }[];
 };
 
