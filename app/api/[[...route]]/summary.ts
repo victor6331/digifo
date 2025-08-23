@@ -1,6 +1,14 @@
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
-import { differenceInDays, parse, subDays } from "date-fns";
+import {
+  addMonths,
+  differenceInDays,
+  endOfMonth,
+  parse,
+  startOfMonth,
+  subDays,
+  subMonths,
+} from "date-fns";
 import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 import { Hono } from "hono";
 import z from "zod";
@@ -28,18 +36,22 @@ const app = new Hono().get(
       return c.json({ error: "Unauthorized" }, 401);
     }
 
-    const defaultTo = new Date();
-    const defaultFrom = subDays(defaultTo, 30);
+    const baseDate = from ? parse(from, "yyyy-MM-dd", new Date()) : new Date();
+    const baseMonthStart = startOfMonth(baseDate);
 
-    const startDate = from
-      ? parse(from, "yyyy-MM-dd", new Date())
-      : defaultFrom;
-    const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
+    const defaultTo = new Date();
+    const defaultFrom = subMonths(defaultTo, 6);
+
+    const startDate = startOfMonth(subMonths(baseMonthStart, 2));
+    const endDate = endOfMonth(addMonths(baseMonthStart, 6));
 
     const periodLength = differenceInDays(endDate, startDate) + 1;
     const lastPeriodstart = subDays(startDate, periodLength);
     const lastPeriodend = subDays(endDate, periodLength);
 
+    // Aggregates totals over a date range for income/expenses/remaining.
+    // Note: expenses are stored as negative amounts; we sum ABS(amount) when amount < 0
+    // so charts and summaries can use positive expense magnitudes.
     async function fetchFinancialData(
       userId: string,
       startDate: Date,
@@ -52,7 +64,8 @@ const app = new Hono().get(
               Number
             ),
           expenses:
-            sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
+            // FIX: add missing parentheses to ABS() to correctly compute expenses
+            sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ABS(${transactions.amount}) ELSE 0 END)`.mapWith(
               Number
             ),
           remaining: sum(transactions.amount).mapWith(Number),

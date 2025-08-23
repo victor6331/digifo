@@ -1,7 +1,7 @@
 "use client";
 
+import { MonthRangePicker } from "@/components/month-range-picker";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverClose,
@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover";
 
 import { formatDateRange } from "@/lib/utils";
-import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 import { ChevronDown } from "lucide-react";
 import qs from "query-string";
 import { useState } from "react";
@@ -28,7 +28,7 @@ export const DateFilter = () => {
   const to = params.get("to") || "";
 
   const defaultTo = endOfMonth(new Date());
-  const defaultFrom = startOfMonth(subMonths(defaultTo, 6));
+  const defaultFrom = startOfMonth(new Date());
 
   const paramState = {
     from: from ? new Date(from) : defaultFrom,
@@ -84,15 +84,7 @@ export const DateFilter = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="lg:w-auto w-full p-0" align="start">
-        <Calendar
-          disabled={false}
-          initialFocus
-          mode="range"
-          defaultMonth={date?.from}
-          selected={date}
-          onSelect={setDate}
-          numberOfMonths={2}
-        />
+        <MonthRangePicker value={date} onChange={setDate} />
         <div className="p-4 w-full flex items-center gap-x-2">
           <PopoverClose asChild>
             <Button

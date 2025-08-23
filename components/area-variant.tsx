@@ -15,7 +15,7 @@ import { fr } from "date-fns/locale";
 
 type Props = {
   data?: {
-    date: string;
+    date: Date;
     income: number;
     expenses: number;
   }[];

@@ -37,6 +37,8 @@ export const useGetSummary = () => {
         })),
         months: data.months.map((month) => ({
           ...month,
+          // Ensure date is a real Date object for chart formatters
+          date: new Date(month.date),
           income: convertAmountFromMiliunits(month.income),
           expenses: convertAmountFromMiliunits(month.expenses),
           remaining: convertAmountFromMiliunits(month.remaining),
