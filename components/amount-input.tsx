@@ -66,8 +66,8 @@ export const AmountInput = ({
         disabled={disabled}
       />
       <p className="text-xs text-muted-foreground mt-2">
-        {isIncome && "This will count as an income"}
-        {isExpense && "This will count as an expense"}
+        {isIncome && "Cette somme sera considéré comme un revenu"}
+        {isExpense && "Cette somme sera considéré comme une dépense"}
       </p>
     </div>
   );

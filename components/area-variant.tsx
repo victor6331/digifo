@@ -2,6 +2,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -60,6 +61,14 @@ export const AreaVariant = ({ data }: Props) => {
           strokeWidth={2}
           stroke="#f43f5e"
           fill="url(#expenses)"
+          className="drop-shadow-sm"
+        />
+        <Line
+          type="monotone"
+          dataKey="remaining"
+          stroke="#3B82F6"
+          strokeWidth={2}
+          dot={false}
           className="drop-shadow-sm"
         />
       </AreaChart>

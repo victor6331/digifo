@@ -39,6 +39,7 @@ export const useGetSummary = () => {
           ...day,
           income: convertAmountFromMiliunits(day.income),
           expenses: convertAmountFromMiliunits(day.expenses),
+          remaining: convertAmountFromMiliunits(day.remaining),
         })),
       };
     },

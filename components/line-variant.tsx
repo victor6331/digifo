@@ -48,6 +48,13 @@ export const LineVariant = ({ data }: Props) => {
           strokeWidth={2}
           className="drop-shadow-sm"
         />
+        <Line
+          dot={false}
+          dataKey="remaining"
+          stroke="#3B82F6"
+          strokeWidth={2}
+          className="drop-shadow-sm"
+        />
       </LineChart>
     </ResponsiveContainer>
   );

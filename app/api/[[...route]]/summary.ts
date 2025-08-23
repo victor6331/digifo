@@ -157,6 +157,12 @@ const app = new Hono().get(
 
     const days = fillMissingDays(activeDays, startDate, endDate);
 
+    let running = 0;
+    const daysWithBalance = days.map((day) => {
+      running += day.income - day.expenses;
+      return { ...day, remaining: running };
+    });
+
     return c.json({
       data: {
         remainingAmount: currentPeriod.remaining,
@@ -166,7 +172,7 @@ const app = new Hono().get(
         expensesAmount: currentPeriod.expenses,
         expensesChange,
         categories: finalCategories,
-        days,
+        days: daysWithBalance,
       },
     });
   }

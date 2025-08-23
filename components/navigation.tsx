@@ -27,6 +27,10 @@ const routes = [
     label: "Catégories",
   },
   {
+    href: "/forecast",
+    label: "Prévisions",
+  },
+  {
     href: "/settings",
     label: "Paramètres",
   },

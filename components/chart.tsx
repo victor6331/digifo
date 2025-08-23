@@ -28,6 +28,7 @@ type Props = {
     date: string;
     income: number;
     expenses: number;
+    remaining: number;
   }[];
 };
 

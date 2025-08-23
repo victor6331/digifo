@@ -9,8 +9,12 @@ export const CustomTooltip = ({ active, payload }: any) => {
   if (!active) return null;
 
   const date = payload[0].payload.date;
-  const income = payload[0].value;
-  const expenses = payload[1].value;
+
+  const income = payload.find((p: any) => p.dataKey === "income")?.value ?? 0;
+  const expenses =
+    payload.find((p: any) => p.dataKey === "expenses")?.value ?? 0;
+  const remaining =
+    payload.find((p: any) => p.dataKey === "remaining")?.value ?? 0;
 
   return (
     <div className="rounded-sm bg-white border overflow-hidden">
@@ -35,6 +39,15 @@ export const CustomTooltip = ({ active, payload }: any) => {
           </div>
           <p className="text-sm text-right font-medium">
             {formatCurrency(expenses * -1)}
+          </p>
+        </div>
+        <div className="flex items-center justify-between gap-x-4">
+          <div className="flex items-center gap-x-2">
+            <div className="size-1.5 bg-blue-500 rounded-full" />
+            <p className="text-sm text-muted-foreground">Solde</p>
+          </div>
+          <p className="text-sm text-right font-medium">
+            {formatCurrency(remaining)}
           </p>
         </div>
       </div>

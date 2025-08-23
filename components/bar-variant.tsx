@@ -2,6 +2,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -36,6 +37,14 @@ export const BarVariant = ({ data }: Props) => {
         <Tooltip content={<CustomTooltip />} />
         <Bar dataKey="income" fill="#22c55e" className="drop-shadow-sm" />
         <Bar dataKey="expenses" fill="#f43f5e" className="drop-shadow-sm" />
+        <Line
+          type="monotone"
+          dataKey="remaining"
+          stroke="#3B82F6"
+          strokeWidth={2}
+          dot={false}
+          className="drop-shadow-sm"
+        />
       </BarChart>
     </ResponsiveContainer>
   );
