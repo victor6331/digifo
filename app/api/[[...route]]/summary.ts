@@ -7,7 +7,7 @@ import z from "zod";
 
 import { db } from "@/db/drizzle";
 import { accounts, categories, transactions } from "@/db/schema";
-import { calculatePercentageChange, fillMissingDays } from "@/lib/utils";
+import { calculatePercentageChange, fillMissingMonths } from "@/lib/utils";
 
 const app = new Hono().get(
   "/",
@@ -130,9 +130,9 @@ const app = new Hono().get(
       });
     }
 
-    const activeDays = await db
+    const activeMonths = await db
       .select({
-        date: transactions.date,
+        date: sql`DATE_TRUNC('month', ${transactions.date})`.mapWith(Date),
         income:
           sql`SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
             Number
@@ -152,15 +152,15 @@ const app = new Hono().get(
           lte(transactions.date, endDate)
         )
       )
-      .groupBy(transactions.date)
-      .orderBy(transactions.date);
+      .groupBy(sql`DATE_TRUNC('month', ${transactions.date})`)
+      .orderBy(sql`DATE_TRUNC('month', ${transactions.date})`);
 
-    const days = fillMissingDays(activeDays, startDate, endDate);
+    const months = fillMissingMonths(activeMonths, startDate, endDate);
 
     let running = 0;
-    const daysWithBalance = days.map((day) => {
-      running += day.income - day.expenses;
-      return { ...day, remaining: running };
+    const monthsWithBalance = months.map((month) => {
+      running += month.income - month.expenses;
+      return { ...month, remaining: running };
     });
 
     return c.json({
@@ -172,7 +172,7 @@ const app = new Hono().get(
         expensesAmount: currentPeriod.expenses,
         expensesChange,
         categories: finalCategories,
-        days: daysWithBalance,
+        months: monthsWithBalance,
       },
     });
   }

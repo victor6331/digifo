@@ -29,7 +29,7 @@ export const LineVariant = ({ data }: Props) => {
           axisLine={false}
           tickLine={false}
           dataKey="date"
-          tickFormatter={(value) => format(value, "dd MMM", { locale: fr })}
+          tickFormatter={(value) => format(value, "MMM yyyy", { locale: fr })}
           style={{ fontSize: "12px" }}
           tickMargin={16}
         />

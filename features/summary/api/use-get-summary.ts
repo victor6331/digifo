@@ -35,11 +35,11 @@ export const useGetSummary = () => {
           ...category,
           value: convertAmountFromMiliunits(category.value),
         })),
-        days: data.days.map((day) => ({
-          ...day,
-          income: convertAmountFromMiliunits(day.income),
-          expenses: convertAmountFromMiliunits(day.expenses),
-          remaining: convertAmountFromMiliunits(day.remaining),
+        months: data.months.map((month) => ({
+          ...month,
+          income: convertAmountFromMiliunits(month.income),
+          expenses: convertAmountFromMiliunits(month.expenses),
+          remaining: convertAmountFromMiliunits(month.remaining),
         })),
       };
     },

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover";
 
 import { formatDateRange } from "@/lib/utils";
-import { format, subDays } from "date-fns";
+import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
 import { ChevronDown } from "lucide-react";
 import qs from "query-string";
 import { useState } from "react";
@@ -27,8 +27,8 @@ export const DateFilter = () => {
   const from = params.get("from") || "";
   const to = params.get("to") || "";
 
-  const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 30);
+  const defaultTo = endOfMonth(new Date());
+  const defaultFrom = startOfMonth(subMonths(defaultTo, 6));
 
   const paramState = {
     from: from ? new Date(from) : defaultFrom,
@@ -38,13 +38,14 @@ export const DateFilter = () => {
   const [date, setDate] = useState<DateRange | undefined>(paramState);
 
   const pushToUrl = (dateRange: DateRange | undefined) => {
+    const fromDate = dateRange?.from
+      ? startOfMonth(dateRange.from)
+      : defaultFrom;
+    const toDate = dateRange?.to ? endOfMonth(dateRange.to) : defaultTo;
+
     const query = {
-      from: dateRange?.from
-        ? format(dateRange.from, "yyyy-MM-dd")
-        : format(defaultFrom, "yyyy-MM-dd"),
-      to: dateRange?.to
-        ? format(dateRange.to, "yyyy-MM-dd")
-        : format(defaultTo, "yyyy-MM-dd"),
+      from: format(fromDate, "yyyy-MM-dd"),
+      to: format(toDate, "yyyy-MM-dd"),
       accountId,
     };
 

@@ -1,5 +1,12 @@
 import { clsx, type ClassValue } from "clsx";
-import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
+import {
+  eachDayOfInterval,
+  eachMonthOfInterval,
+  format,
+  isSameDay,
+  isSameMonth,
+  subMonths,
+} from "date-fns";
 import { fr } from "date-fns/locale";
 import { twMerge } from "tailwind-merge";
 
@@ -66,6 +73,28 @@ export function fillMissingDays(
   return transactionByDay;
 }
 
+export function fillMissingMonths(
+  activeMonths: {
+    date: Date;
+    income: number;
+    expenses: number;
+  }[],
+  startDate: Date,
+  endDate: Date
+) {
+  if (activeMonths.length === 0) {
+    return [];
+  }
+
+  const allMonths = eachMonthOfInterval({ start: startDate, end: endDate });
+  const transactionByMonth = allMonths.map((monthStart) => {
+    const found = activeMonths.find((d) => isSameMonth(d.date, monthStart));
+    return found ? found : { date: monthStart, income: 0, expenses: 0 };
+  });
+
+  return transactionByMonth;
+}
+
 type Period = {
   from: string | Date | undefined;
   to: string | Date | undefined;
@@ -73,12 +102,12 @@ type Period = {
 
 export function formatDateRange(period?: Period) {
   const defaultTo = new Date();
-  const defaultFrom = subDays(defaultTo, 30);
+  const defaultFrom = subMonths(defaultTo, 6);
 
   if (!period?.from) {
     return `${format(defaultFrom, "LLL dd", { locale: fr })} - ${format(
       defaultTo,
-      "LLL dd, y",
+      "LLL yyyy",
       { locale: fr }
     )}`;
   }
@@ -86,7 +115,7 @@ export function formatDateRange(period?: Period) {
   if (period.to) {
     return `${format(period.from as Date, "LLL dd", { locale: fr })} - ${format(
       period.to as Date,
-      "LLL dd, y",
+      "LLL yyyy",
       { locale: fr }
     )}`;
   }
