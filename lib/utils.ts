@@ -5,6 +5,7 @@ import {
   format,
   isSameDay,
   isSameMonth,
+  parse,
   subMonths,
 } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -112,15 +113,24 @@ export function formatDateRange(period?: Period) {
     )}`;
   }
 
+  const fromDate =
+    typeof period.from === "string"
+      ? parse(period.from, "yyyy-MM-dd", new Date())
+      : (period.from as Date);
+
   if (period.to) {
-    return `${format(period.from as Date, "LLL dd", { locale: fr })} - ${format(
-      period.to as Date,
+    const toDate =
+      typeof period.to === "string"
+        ? parse(period.to, "yyyy-MM-dd", new Date())
+        : (period.to as Date);
+    return `${format(fromDate, "LLL dd", { locale: fr })} - ${format(
+      toDate,
       "LLL yyyy",
       { locale: fr }
     )}`;
   }
 
-  return format(period.from as Date, "LLL dd, y", { locale: fr });
+  return format(fromDate, "LLL dd, y", { locale: fr });
 }
 
 export function formatPercentage(
