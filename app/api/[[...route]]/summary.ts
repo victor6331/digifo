@@ -1,7 +1,6 @@
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import {
-  addMonths,
   differenceInDays,
   endOfMonth,
   parse,
@@ -40,14 +39,19 @@ const app = new Hono().get(
     const baseMonthStart = startOfMonth(baseDate);
 
     const defaultTo = new Date();
-    const defaultFrom = subMonths(defaultTo, 6);
+    const defaultFrom = subMonths(defaultTo, 12);
 
-    const startDate = startOfMonth(subMonths(baseMonthStart, 2));
-    const endDate = endOfMonth(addMonths(baseMonthStart, 6));
+    const periodStart = from
+      ? startOfMonth(parse(from, "yyyy-MM-dd", new Date()))
+      : startOfMonth(defaultFrom);
 
-    const periodLength = differenceInDays(endDate, startDate) + 1;
-    const lastPeriodstart = subDays(startDate, periodLength);
-    const lastPeriodend = subDays(endDate, periodLength);
+    const periodEnd = to
+      ? endOfMonth(parse(to, "yyyy-MM-dd", new Date()))
+      : endOfMonth(defaultTo);
+
+    const periodLength = differenceInDays(periodEnd, periodStart) + 1;
+    const lastPeriodstart = subDays(periodStart, periodLength);
+    const lastPeriodend = subDays(periodEnd, periodLength);
 
     // Aggregates totals over a date range for income/expenses/remaining.
     // Note: expenses are stored as negative amounts; we sum ABS(amount) when amount < 0
@@ -84,8 +88,8 @@ const app = new Hono().get(
 
     const [currentPeriod] = await fetchFinancialData(
       auth.userId,
-      startDate,
-      endDate
+      periodStart,
+      periodEnd
     );
     const [lastPeriod] = await fetchFinancialData(
       auth.userId,
@@ -121,8 +125,8 @@ const app = new Hono().get(
           accountId ? eq(transactions.accountId, accountId) : undefined,
           eq(accounts.userId, auth.userId),
           lt(transactions.amount, 0),
-          gte(transactions.date, startDate),
-          lte(transactions.date, endDate)
+          gte(transactions.date, periodStart),
+          lte(transactions.date, periodEnd)
         )
       )
       .groupBy(categories.name)
@@ -161,14 +165,14 @@ const app = new Hono().get(
         and(
           accountId ? eq(transactions.accountId, accountId) : undefined,
           eq(accounts.userId, auth.userId),
-          gte(transactions.date, startDate),
-          lte(transactions.date, endDate)
+          gte(transactions.date, periodStart),
+          lte(transactions.date, periodEnd)
         )
       )
       .groupBy(sql`DATE_TRUNC('month', ${transactions.date})`)
       .orderBy(sql`DATE_TRUNC('month', ${transactions.date})`);
 
-    const months = fillMissingMonths(activeMonths, startDate, endDate);
+    const months = fillMissingMonths(activeMonths, periodStart, periodEnd);
 
     let running = 0;
     const monthsWithBalance = months.map((month) => {
