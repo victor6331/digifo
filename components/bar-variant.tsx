@@ -31,7 +31,11 @@ export const BarVariant = ({ data }: Props) => {
           axisLine={false}
           tickLine={false}
           dataKey="date"
+<<<<<<< HEAD
           tickFormatter={(value) => format(value, "MMM yyyy", { locale: fr })}
+=======
+          tickFormatter={(value) => format(value, "MMM yyyy")}
+>>>>>>> Testerreur
           style={{ fontSize: "12px" }}
           tickMargin={16}
         />
