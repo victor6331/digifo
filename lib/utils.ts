@@ -83,17 +83,46 @@ export function fillMissingMonths(
   startDate: Date,
   endDate: Date
 ) {
-  if (activeMonths.length === 0) {
-    return [];
+  // Coerce input to Date to avoid runtime errors when DB returns strings
+  const toDate = (d: Date | string | number): Date =>
+    d instanceof Date ? d : new Date(d);
+
+  // Key helper using UTC for DB-aggregated dates to avoid tz drift
+  const ymKeyUTC = (raw: Date | string | number) => {
+    const d = toDate(raw);
+    const y = d.getUTCFullYear();
+    const m = d.getUTCMonth() + 1;
+    return `${y}-${String(m).padStart(2, "0")}`;
+  };
+
+  // Key helper for local month starts used on the X-axis
+  const ymKeyLocal = (raw: Date | string | number) => {
+    const d = toDate(raw);
+    const y = d.getFullYear();
+    const m = d.getMonth() + 1;
+    return `${y}-${String(m).padStart(2, "0")}`;
+  };
+
+  const byKey = new Map<string, { date: Date; income: number; expenses: number }>();
+  for (const m of activeMonths) {
+    const key = ymKeyUTC(m.date as unknown as Date | string | number);
+    if (!byKey.has(key)) {
+      // store as Date to normalize downstream
+      const dateObj = toDate(m.date as unknown as Date | string | number);
+      byKey.set(key, { ...m, date: dateObj });
+    }
   }
 
   const allMonths = eachMonthOfInterval({ start: startDate, end: endDate });
-  const transactionByMonth = allMonths.map((monthStart) => {
-    const found = activeMonths.find((d) => isSameMonth(d.date, monthStart));
-    return found ? found : { date: monthStart, income: 0, expenses: 0 };
+  if (allMonths.length === 0) return [];
+
+  const result = allMonths.map((monthStart) => {
+    const key = ymKeyLocal(monthStart);
+    const found = byKey.get(key);
+    return found ? { ...found, date: monthStart } : { date: monthStart, income: 0, expenses: 0 };
   });
 
-  return transactionByMonth;
+  return result;
 }
 
 type Period = {

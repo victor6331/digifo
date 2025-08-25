@@ -171,7 +171,6 @@ const app = new Hono().get(
       )
       .groupBy(sql`DATE_TRUNC('month', ${transactions.date})`)
       .orderBy(sql`DATE_TRUNC('month', ${transactions.date})`);
-
     const months = fillMissingMonths(activeMonths, periodStart, periodEnd);
 
     let running = 0;
