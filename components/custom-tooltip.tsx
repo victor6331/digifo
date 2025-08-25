@@ -14,7 +14,7 @@ export const CustomTooltip = ({ active, payload }: any) => {
   return (
     <div className="rounded-sm bg-white border overflow-hidden">
       <div className="text-sm p-2 px-3 bg-muted text-muted-foreground">
-        {format(date, "MMM dd, yyyy")}
+        {format(date, "MMM yyyy")}
       </div>
       <Separator />
       <div className="p-2 px-3 space-y-1">

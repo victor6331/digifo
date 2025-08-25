@@ -25,7 +25,7 @@ import { LineVariant } from "@/components/line-variant";
 
 type Props = {
   data?: {
-    date: string;
+    date: Date;
     income: number;
     expenses: number;
   }[];

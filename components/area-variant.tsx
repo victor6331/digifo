@@ -13,7 +13,7 @@ import { format } from "date-fns";
 
 type Props = {
   data?: {
-    date: string;
+    date: Date;
     income: number;
     expenses: number;
   }[];
@@ -38,7 +38,7 @@ export const AreaVariant = ({ data }: Props) => {
           axisLine={false}
           tickLine={false}
           dataKey="date"
-          tickFormatter={(value) => format(value, "dd MMM")}
+          tickFormatter={(value) => format(value, "MMM yyyy")}
           style={{ fontSize: "12px" }}
           tickMargin={16}
         />
